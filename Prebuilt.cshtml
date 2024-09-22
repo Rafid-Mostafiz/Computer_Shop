@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Prebuilt Section";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Prebuilt</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/prebuilts.css">
+    <style>
+        .prebuilt-container {
+            padding: 50px 0;
+        }
+
+        .pc-box {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .pc-box img {
+            border-radius: 10px;
+        }
+
+        .pc-info h3 {
+            margin-top: 15px;
+            color: #343a40;
+        }
+
+        .btn {
+            margin-top: 15px;
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #5a6268;
+        }
+
+       
+        @@media (max-width: 768px) {
+            .prebuilt-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="prebuilt-container">
+        <div class="row justify-content-center">
+            <!-- Student PC -->
+            <div class="col-md-4">
+                <div class="prebuilt-card">
+                    <div class="pc-box">
+                        <img src="@Url.Content("~/Models/images/student.jpg")" class="img-fluid" alt="Student PC">
+                        <div class="pc-info">
+                            <h3>Student PC</h3>
+                            <a href="@Url.Action("ComingSoon", "Home")" class="btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Editing PC -->
+            <div class="col-md-4">
+                <div class="prebuilt-card">
+                    <div class="pc-box">
+                        <img src="@Url.Content("~/Models/images/editing.jpg")" class="img-fluid" alt="Editing PC">
+                        <div class="pc-info">
+                            <h3>Editing PC</h3>
+                            <a href="@Url.Action("ComingSoon", "Home")" class="btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gaming PC -->
+            <div class="col-md-4">
+                <div class="prebuilt-card">
+                    <div class="pc-box">
+                        <img src="@Url.Content("~/Models/images/gaming.jpg")" class="img-fluid" alt="Gaming PC">
+                        <div class="pc-info">
+                            <h3>Gaming PC</h3>
+                            <a href="@Url.Action("ComingSoon", "Home")" class="btn">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+  
+</html>
