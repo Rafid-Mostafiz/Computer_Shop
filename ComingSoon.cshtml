@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Coming Soon";
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Content/comingsoon.css" />
+    <style>
+       
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .coming-soon-box {
+            background-color: white;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 72px;
+            color: #343a40;
+            margin: 0;
+        }
+
+        p {
+            font-size: 20px;
+            margin-top: 10px;
+            color: #6c757d;
+        }
+
+        .home-button {
+            margin-top: 40px;
+            padding: 15px 30px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .home-button:hover {
+            background-color: #218838;
+        }
+
+        
+       @@media (max-width: 768px) {
+            h1 {
+                font-size: 48px;
+            }
+
+            p {
+                font-size: 18px;
+            }
+
+            .home-button {
+                padding: 12px 24px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="coming-soon-box">
+            <h1>Coming Soon</h1>
+            <p>We're working on something amazing. Stay tuned!</p>
+            <a href="@Url.Action("Homepage", "Home")" class="home-button">Go Back to Homepage</a>
+        </div>
+    </div>
+</body>
+</html>
