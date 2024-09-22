@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Individual Prebuilds";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Individual Prebuilds</title>
+    <link rel="stylesheet" href="~/Content/individual_prebuilts.css" />
+</head>
+<body>
+    <div style="padding: 20px 0;"></div>
+    <div class="prebuilds-container">
+        <div class="component-grid">
+            <!-- PC Component 1 -->
+            <div class="component-card">
+                <img src="@Url.Content("~/Models/images/components/cpu.jpg")" alt="CPU">
+                <div class="component-info">
+                    <h3>Intel Core i7</h3>
+                    <p>$299.99</p>
+                </div>
+            </div>
+            
+        </div>
+      
+        <div class="total-price-container">
+            <h3>Total Price: $1,929.91</h3>
+            <a href="#" class="buy-now-btn">Buy Now</a>
+        </div>
+    </div>
+</body>
+</html>
