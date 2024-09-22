@@ -1,0 +1,141 @@
+﻿@model List<Tech_Shop.Models.c_p>
+
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Content/products.css" />
+    <style>
+        /* Apply filter button styling */
+        #filter-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+            #filter-button:hover {
+                background-color: #218838;
+            }
+
+        .product-list {
+            display: flex;
+            flex-wrap: wrap; /* Allows items to wrap */
+            justify-content: space-between; /* Spacing between items */
+        }
+
+        .product-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center align items */
+            width: 200px; /* Fixed width */
+            height: 300px; /* Fixed height */
+            margin: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 10px;
+            box-sizing: border-box; /* Include padding in width and height */
+        }
+
+            .product-item img {
+                width: 150px;
+                height: 150px;
+                object-fit: cover; /* Maintain aspect ratio */
+            }
+
+        .product-name {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .product-price {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Compact Filter Section -->
+        <div class="filters">
+            <!-- Commenting out the Filter by Component -->
+            @*
+                <div class="filter-section">
+                    <div class="filter-title">Filter by Component:</div>
+                    <label for="component">Component:</label>
+                    <select id="component" name="component">
+                        <option value="all" @(Request.QueryString["component"] == "all" ? "selected" : "")>All</option>
+                        <option value="cpu" @(Request.QueryString["component"] == "cpu" ? "selected" : "")>CPU</option>
+                        <option value="gpu" @(Request.QueryString["component"] == "gpu" ? "selected" : "")>GPU</option>
+                        <option value="motherboard" @(Request.QueryString["component"] == "motherboard" ? "selected" : "")>Motherboard</option>
+                        <option value="ram" @(Request.QueryString["component"] == "ram" ? "selected" : "")>RAM</option>
+                        <option value="storage" @(Request.QueryString["component"] == "storage" ? "selected" : "")>Storage</option>
+                        <option value="casing" @(Request.QueryString["component"] == "casing" ? "selected" : "")>Casing</option>
+                        <option value="psu" @(Request.QueryString["component"] == "psu" ? "selected" : "")>PSU</option>
+                        <option value="keyboard" @(Request.QueryString["component"] == "keyboard" ? "selected" : "")>Keyboard</option>
+                        <option value="mouse" @(Request.QueryString["component"] == "mouse" ? "selected" : "")>Mouse</option>
+                    </select>
+                </div>
+            *@
+
+            <div class="filter-section">
+                <div class="filter-title">Filter by Availability:</div>
+                <label><input type="checkbox" id="availability" name="availability" value="in-stock" @(Request.QueryString["availability"] == "in-stock" ? "checked" : "") /> In Stock</label>
+                <label><input type="checkbox" id="availability" name="availability" value="out-of-stock" @(Request.QueryString["availability"] == "out-of-stock" ? "checked" : "") /> Out of Stock</label>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-title">Filter by Price Range:</div>
+                <label for="price-min">Min Price:</label>
+                <input type="text" id="price-min" name="price-min" value="@Request.QueryString["priceMin"]" placeholder="Min Price" />
+                <label for="price-max">Max Price:</label>
+                <input type="text" id="price-max" name="price-max" value="@Request.QueryString["priceMax"]" placeholder="Max Price" />
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-title">Sort by:</div>
+                <label for="sort">Sort by:</label>
+                <select id="sort" name="sort">
+                    <option value="high-to-low" @(Request.QueryString["sortOrder"] == "high-to-low" ? "selected" : "")>Price: High to Low</option>
+                    <option value="low-to-high" @(Request.QueryString["sortOrder"] == "low-to-high" ? "selected" : "")>Price: Low to High</option>
+                </select>
+            </div>
+
+            <button type="submit" id="filter-button">Apply Filters</button>
+        </div>
+
+        <!-- Product Listing Section -->
+        <div class="product-list">
+            @foreach (var product in Model)
+            {
+                <div class="product-item" onclick="location.href='@Url.Action("Individual_product", new { id = product.ID})'">
+                    <img src="@Url.Action("GetImage", "Home", new { filename = System.IO.Path.GetFileName(product.ImagePath) })" alt="@product.Name">
+                    <div class="product-name">@product.Name</div>
+                    <div class="product-price">$@product.Price</div>
+                </div>
+            }
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // JavaScript to trigger the filter logic
+        $('#filter-button').on('click', function () {
+            var availability = $('input[name="availability"]:checked').val();
+            var priceMin = $('#price-min').val();
+            var priceMax = $('#price-max').val();
+            var sort = $('#sort').val();
+
+            window.location.href = '@Url.Action("Products")' + '?availability=' + availability + '&priceMin=' + priceMin + '&priceMax=' + priceMax + '&sortOrder=' + sort;
+        });
+    </script>
+</body>
+</html>
