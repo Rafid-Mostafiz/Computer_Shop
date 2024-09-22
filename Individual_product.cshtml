@@ -1,0 +1,67 @@
+﻿@model Tech_Shop.Models.c_p
+
+@{
+    ViewBag.Title = "Individual Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Individual Product</title>
+    <link rel="stylesheet" href="~/Content/individual_products.css" />
+</head>
+<body>
+
+    <div class="container">
+        <div class="row product-details">
+            <!-- Left: Product Image -->
+            <div class="col-md-6 product-image">
+                <img src="@Url.Action("GetImage", "Home", new { filename = System.IO.Path.GetFileName(Model.ImagePath) })" alt="Product Image">
+            </div>
+            <!-- Right: Product Information -->
+            <div class="col-md-6 product-info">
+                <h1>@Model.Name</h1>
+                <p>Brand: @Model.Brand</p>
+                <p class="price">$@Model.Price</p>
+                <p class="availability">Availability: @Model.Availability</p>
+
+                <div class="quantity">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1" max="10">
+                </div>
+                <div class="actions mt-3">
+                    <!-- Removed Buy Now button -->
+                    <form action="@Url.Action("AddToCart", "Home")" method="post">
+                        <input type="hidden" name="id" value="@Model.ID" />
+                        <input type="hidden" name="quantity" id="quantity" value="1" />
+                        <button type="submit" class="btn btn-cart">
+                            <i class="fa fa-shopping-cart"></i> Add to Cart
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products Section -->
+        <div class="related-products">
+            <h2>Related Products</h2>
+            <div class="row product-list">
+                @for (int i = 0; i < Math.Min(4, ViewBag.RelatedProducts.Count); i++) // Limit to 4
+                {
+                    var item = ViewBag.RelatedProducts[i]; // Get the current item
+
+                    <div class="col-md-3 product-item">
+                        <a href="@Url.Action("Individual_product", "Home", new { id = item.ID })">
+                            <img src="@Url.Action("GetImage", "Home", new { filename = System.IO.Path.GetFileName(item.ImagePath) })" alt="Related Product">
+                            <div class="product-name">@item.Name</div>
+                            <div class="product-price">$@item.Price</div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
