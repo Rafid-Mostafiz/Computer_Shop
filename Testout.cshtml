@@ -1,0 +1,49 @@
+﻿@model Tech_Shop.Models.c_p
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Testout</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+            .container img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .container h2 {
+                margin-top: 15px;
+                font-size: 24px;
+                color: #333;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        @if (Model != null)
+        {
+            <img src="@Url.Content(Model.ImagePath)" alt="Product Image" />
+            <h2>@Model.Name</h2>
+        }
+        else
+        {
+            <p>No product found.</p>
+        }
+    </div>
+</body>
+</html>
