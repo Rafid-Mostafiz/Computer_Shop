@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Error";
+    Layout = null; 
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .error-container {
+            text-align: center;
+            padding: 50px;
+        }
+
+        .btn-go-back {
+            background-color: #28a745; 
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1 class="display-4">Oops!</h1>
+        <p class="lead">Something went wrong.</p>
+        <p>Please try again later, or go back to the homepage.</p>
+        <a href="@Url.Action("Homepage", "Home")" class="btn btn-go-back">Go Back to Homepage</a>
+    </div>
+</body>
+</html>
