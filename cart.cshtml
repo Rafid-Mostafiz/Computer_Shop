@@ -1,0 +1,165 @@
+﻿@model List<Tech_Shop.Models.cart>
+
+@{
+    ViewBag.Title = "Shopping Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/cart.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .btn-remove {
+            background-color: red;
+            color: white;
+        }
+
+        .btn-checkout {
+            background-color: green;
+            color: white;
+        }
+
+        .btn-update {
+            background-color: orange;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cart-container">
+        <h1>Shopping Cart</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><input type="checkbox" class="select-item" data-id="@item.cart_id"></td>
+                        <td>
+                            <img src="@Url.Action("GetImage", "Home", new { filename = System.IO.Path.GetFileName(item.c_p.ImagePath) })" alt="Product Image" width="50">
+                            <span>@item.c_p.Name</span>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control quantity-input" value="@item.quantity" min="1" max="10" data-id="@item.cart_id">
+                        </td>
+                        <td>$@item.c_p.Price</td>
+                        <td class="item-total" data-id="@item.cart_id">$@((item.quantity * item.c_p.Price).ToString("F2"))</td>
+                        <td>
+                            <button class="btn btn-remove" data-id="@item.cart_id">Remove</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="cart-actions">
+            <div>
+                <input type="checkbox" id="select-all">
+                <label for="select-all">Select All</label>
+            </div>
+            <div>
+                <button class="btn btn-remove" id="remove-selected">Remove Selected</button>
+            </div>
+            <div>
+                <button class="btn btn-update" id="update-cart">Update</button>
+            </div>
+            <div>
+                <button class="btn btn-checkout" id="proceed-checkout">Proceed to Checkout</button>
+            </div>
+        </div>
+
+        <div class="total-price">
+            Total: $<span id="cart-total">0.00</span>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function calculateTotal() {
+                let total = 0;
+                $(".item-total").each(function () {
+                    total += parseFloat($(this).text().replace('$', ''));
+                });
+                $("#cart-total").text(total.toFixed(2));
+            }
+
+            $("#select-all").on('change', function () {
+                $(".select-item").prop('checked', this.checked);
+            });
+
+            $("#remove-selected").on('click', function () {
+                $(".select-item:checked").each(function () {
+                    let cartId = $(this).data('id');
+                    $(this).closest('tr').remove(); // Remove from the table
+                    // Call AJAX to remove item from cart in database
+                    $.ajax({
+                        url: '/Home/RemoveFromCart',
+                        type: 'POST',
+                        data: { id: cartId },
+                        success: function () {
+                            calculateTotal();
+                        }
+                    });
+                });
+            });
+
+            $(".btn-remove").on('click', function () {
+                let cartId = $(this).data('id');
+                $(this).closest('tr').remove();
+                // Call AJAX to remove item from cart in database
+                $.ajax({
+                    url: '/Home/RemoveFromCart',
+                    type: 'POST',
+                    data: { id: cartId },
+                    success: function () {
+                        calculateTotal();
+                    }
+                });
+            });
+
+            $("#update-cart").on('click', function () {
+                $(".quantity-input").each(function () {
+                    let cartId = $(this).data('id');
+                    let quantity = $(this).val();
+                    // Update total price for this item
+                    let price = parseFloat($(this).closest('tr').find('td:eq(3)').text().replace('$', ''));
+                    let total = price * quantity;
+                    $(this).closest('tr').find('.item-total').text('$' + total.toFixed(2));
+
+                    // Call AJAX to update quantity in database
+                    $.ajax({
+                        url: '/Home/UpdateCart',
+                        type: 'POST',
+                        data: { id: cartId, quantity: quantity },
+                        success: function () {
+                            calculateTotal();
+                        }
+                    });
+                });
+            });
+
+            $("#proceed-checkout").on('click', function () {
+                window.location.href = '@Url.Action("ComingSoon2", "Home")';
+            });
+
+            calculateTotal();
+        });
+    </script>
+</body>
+</html>
