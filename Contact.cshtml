@@ -1,0 +1,181 @@
+﻿@model Tech_Shop.Models.contact
+@{
+    ViewBag.Title = "Contact Us";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/content/contact.css" />
+<style>
+    .container {
+        margin-top: 60px; /* Gap below the navbar */
+        padding: 20px;
+    }
+
+    /* Heading styles */
+    .contact-heading {
+        text-align: center;
+        color: #4CAF50; /* Green shade for heading */
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+    }
+
+        .contact-heading span {
+            color: #009688; /* Lighter green for 'Us' part */
+        }
+
+    /* Contact info section */
+    .contact-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 40px;
+        flex-wrap: wrap;
+    }
+
+    .info-item {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        width: calc(50% - 20px);
+        margin-bottom: 20px;
+    }
+
+        .info-item i {
+            font-size: 2.5rem;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .info-item h4 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .info-item p {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+    /* Contact form container */
+    .contact-form-container {
+        width: 100%; /* Full width */
+        margin-top: 30px;
+    }
+
+    /* Contact form styles */
+    .contact-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center-align the form items */
+        width: 100%;
+    }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%; /* Full width */
+            max-width: 600px; /* Set a max width to match the button */
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .contact-form textarea {
+            height: 150px;
+        }
+
+    .btn-send {
+        background-color: #4CAF50;
+        color: white;
+        padding: 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        width: 100%;
+        max-width: 600px; /* Set max width to match inputs */
+        text-align: center;
+        transition: background-color 0.3s ease;
+        box-sizing: border-box;
+    }
+
+        .btn-send:hover {
+            background-color: #388E3C;
+        }
+</style>
+<div class="container">
+    <h1 class="contact-heading">CONTACT <span>US</span></h1>
+
+    <!-- Contact Info Section -->
+    <!-- Contact Info Section -->
+    <div class="row contact-info">
+        <!-- Address -->
+        <div class="col-md-6 info-item">
+            <i class="fa fa-map-marker"></i>
+            <h4>ADDRESS</h4>
+            <p>Ahsanullah University of Science and Technology</p>
+            <p>141 & 142, Love Road, Tejgaon Industrial Area, Dhaka-1208</p>
+        </div>
+
+        <!-- Call Us -->
+        <div class="col-md-6 info-item">
+            <i class="fa fa-phone"></i>
+            <h4>CALL US</h4>
+            <p>+8801**</p>
+            <p>+8801**</p>
+        </div>
+
+        <!-- Email -->
+        <div class="col-md-6 info-item">
+            <i class="fa fa-envelope"></i>
+            <h4>EMAIL US</h4>
+            <p>info@aust.edu</p>
+            <p>regr@aust.edu</p>
+        </div>
+
+        <!-- Working Hours -->
+        <div class="col-md-6 info-item">
+            <i class="fa fa-clock-o"></i>
+            <h4>WORKING HOURS</h4>
+            <p>Sun - Thu: 9AM to 5PM</p>
+            <p>Saturday: 9AM to 1PM</p>
+        </div>
+    </div>
+
+    <!-- Contact Form Section -->
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            @using (Html.BeginForm("SubmitContact", "Home", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group custom-form-group">
+                    @Html.TextBoxFor(m => m.name, new { @class = "form-control custom-input", placeholder = "Your Name", required = "required" })
+                </div>
+
+                <div class="form-group custom-form-group">
+                    @Html.TextBoxFor(m => m.email, new { @class = "form-control custom-input", placeholder = "Your Email", required = "required", type = "email" })
+                </div>
+
+                <div class="form-group custom-form-group">
+                    @Html.TextBoxFor(m => m.subject, new { @class = "form-control custom-input", placeholder = "Subject", required = "required" })
+                </div>
+
+                <div class="form-group custom-form-group">
+                    @Html.TextAreaFor(m => m.message, new { @class = "form-control custom-textarea", placeholder = "Message", required = "required" })
+                </div>
+
+                <button type="submit" class="btn btn-send">Send Message</button>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- External Resources for Icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
